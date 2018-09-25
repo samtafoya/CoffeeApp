@@ -1,5 +1,7 @@
 package com.example.sammitafoya.coffeeapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void computeOrder (View view) {
         summary.setText(coffee.getOrderSummary());
-    }
 
+        String subject = "Coffee Order";
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:samantha_tafoya@redlands.edu"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, coffee.getOrderSummary());
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 }
